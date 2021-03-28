@@ -29,10 +29,12 @@
             <li id="ahead"></li>
         </ul>
 
-        <p class="text-muted"><small>Updates every 3 minutes &middot; <a
+        <p class="text-muted"><small>Updates every 2 minutes &middot; <a
                     href="https://github.com/SpheeresX/rms-letters">Source</a></small></p>
 
         <script>
+            var cdata;
+
             function highlight(id, seconds) {
                 var element = document.getElementById(id);
 
@@ -42,12 +44,24 @@
                 }, (seconds * 1000));
             }
 
-            async function getData() {
+            async function getData(firstRun) {
                 var data = await fetch('/api/stats');
                 var json = await data.json();
 
-                document.getElementById('support').innerHTML = `The support letter has ${json.support} signatures`;
-                document.getElementById('open').innerHTML = `The open letter has ${json.open} signatures`;
+                if (firstRun) {
+                    // if the function has been run for the first time since page load, store the signature data
+                    cdata = json;
+                    var newSupport = 0;
+                    var newOpen = 0;
+                } else {
+                    // subtract the first signature data from the current data to get the amount
+                    // of signatures since the page has been loaded
+                    var newSupport = json.support - cdata.support;
+                    var newOpen = json.open - cdata.open;
+                }
+
+                document.getElementById('support').innerHTML = `The support letter has ${json.support} signatures (+${newSupport})`;
+                document.getElementById('open').innerHTML = `The open letter has ${json.open} signatures (+${newOpen})`;
 
                 if (json.open > json.support) {
                     document.getElementById('ahead').innerHTML = `The open letter has ${json.open - json.support} more signatures than the support letter`;
@@ -57,14 +71,14 @@
             }
 
 
-            getData();
-            // update the data every 5 mins
+            getData(true);
+            // update the data every 2 mins
             setInterval(() => {
-                getData();
+                getData(false);
                 highlight('support', 6);
                 highlight('open', 6);
                 highlight('ahead', 6);
-            }, 180000);
+            }, 120000);
         </script>
     </div>
 </body>
