@@ -16,6 +16,10 @@
             -o-transition: text-shadow 1s linear;
             transition: text-shadow 1s linear;
         }
+
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 
@@ -23,7 +27,8 @@
 
     <div class="container">
         <h1>Stats about the RMS letters</h1>
-        <ul>
+        <p id="loading" class="text-muted"><small>Loading...</small></p>
+        <ul class="hidden" id="letters_ul">
             <li id="support"></li>
             <li id="open"></li>
             <li id="ahead"></li>
@@ -49,6 +54,9 @@
                 var json = await data.json();
 
                 if (firstRun) {
+                    // hide the loading screen
+                    document.getElementById('letters_ul').classList.remove('hidden');
+                    document.getElementById('loading').classList.add('hidden');
                     // if the function has been run for the first time since page load, store the signature data
                     cdata = json;
                     var newSupport = 0;
