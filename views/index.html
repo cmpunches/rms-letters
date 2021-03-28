@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title>rms-letters</title>
+    <link href="bs-dark.css" rel="stylesheet">
+</head>
+
+<body style="margin-top: 10px;">
+
+    <div class="container">
+        <h1>Stats about the RMS letters</h1>
+        <ol>
+            <li id="support"></li>
+            <li id="open"></li>
+            <li id="ahead"></li>
+        </ol>
+
+        <p class="text-muted"><small>Updates every 5 minutes &middot; <a href="https://github.com/SpheeresX/rms-letters">Source</a></small></p>
+
+        <script>
+            async function getData() {
+                var data = await fetch('/api/stats');
+                var json = await data.json();
+
+                document.getElementById('support').innerHTML = `The support letter has ${json.support} signatures`;
+                document.getElementById('open').innerHTML = `The open letter has ${json.open} signatures`;
+
+                if (json.open > json.support) {
+                    document.getElementById('ahead').innerHTML = `The open letter has ${json.open - json.support} more signatures than the support letter`;
+                } else if (json.support > json.open) {
+                    document.getElementById('ahead').innerHTML = `The support letter has ${json.support - json.open} more signatures than the open letter`;
+                }
+            }
+
+            getData();
+            setInterval(getData, 300000);
+        </script>
+    </div>
+</body>
+
+</html>
