@@ -8,7 +8,7 @@ const cache = apicache.middleware;
 
 app.use(express.static(__dirname + '/views'));
 
-app.get('/api/stats', cache('4 minutes'), async (req, res) => {
+app.get('/api/stats', cache('3 minutes'), async (req, res) => {
     // fetch the pages and convert the response to plain text
     const OL = await fetch('https://rms-open-letter.github.io/');
     const SL = await fetch('https://rms-support-letter.github.io/');
