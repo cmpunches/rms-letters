@@ -7,6 +7,16 @@
     <meta name="description" content="">
     <title>rms-letters</title>
     <link href="bs-dark.css" rel="stylesheet">
+    <style>
+        .glow {
+            text-shadow: 0 0 10px magenta;
+            -webkit-transition: text-shadow 1s linear;
+            -moz-transition: text-shadow 1s linear;
+            -ms-transition: text-shadow 1s linear;
+            -o-transition: text-shadow 1s linear;
+            transition: text-shadow 1s linear;
+        }
+    </style>
 </head>
 
 <body style="margin-top: 10px;">
@@ -19,9 +29,19 @@
             <li id="ahead"></li>
         </ul>
 
-        <p class="text-muted"><small>Updates every 5 minutes &middot; <a href="https://github.com/SpheeresX/rms-letters">Source</a></small></p>
+        <p class="text-muted"><small>Updates every 5 minutes &middot; <a
+                    href="https://github.com/SpheeresX/rms-letters">Source</a></small></p>
 
         <script>
+            function highlight(id, seconds) {
+                var element = document.getElementById(id);
+
+                element.classList.add('glow');
+                var t = setTimeout(function () {
+                    element.classList.remove('glow');
+                }, (seconds * 1000));
+            }
+
             async function getData() {
                 var data = await fetch('/api/stats');
                 var json = await data.json();
@@ -36,8 +56,15 @@
                 }
             }
 
+
             getData();
-            setInterval(getData, 300000);
+            // update the data every 5 mins
+            setInterval(() => {
+                getData();
+                highlight('support', 6);
+                highlight('open', 6);
+                highlight('ahead', 6);
+            }, 300000);
         </script>
     </div>
 </body>
