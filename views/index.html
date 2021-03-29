@@ -68,7 +68,7 @@
                     var newOpen = json.open - cdata.open;
                 }
 
-                document.getElementById('support').innerHTML = `The support letter has ${json.support} signatures (+${newSupport}, ${json.supportPending} pending on GitHub)`;
+                document.getElementById('support').innerHTML = `The support letter has ${json.support} signatures (+${newSupport}, <span title="Signatures (PRs) that haven't been merged yet">${json.supportPending} pending on GitHub</span>)`;
                 document.getElementById('open').innerHTML = `The open letter has ${json.open} signatures by 16 initial signers, 48 organizations and ${json.open - 48 - 16} individuals (+${newOpen})`;
 
                 if (json.open > json.support) {
