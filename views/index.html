@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
+    <meta name="description" content="See up-to-date information about both RMS letters">
     <title>rms-letters</title>
     <link href="bs-dark.css" rel="stylesheet">
     <style>
@@ -57,7 +57,7 @@
                     // hide the loading screen
                     document.getElementById('letters_ul').classList.remove('hidden');
                     document.getElementById('loading').classList.add('hidden');
-                    // if the function has been run for the first time since page load, store the signature data
+                    // store the signature data we received on page load
                     cdata = json;
                     var newSupport = 0;
                     var newOpen = 0;
@@ -68,8 +68,8 @@
                     var newOpen = json.open - cdata.open;
                 }
 
-                document.getElementById('support').innerHTML = `The support letter has ${json.support} signatures (+${newSupport})`;
-                document.getElementById('open').innerHTML = `The open letter has ${json.open} signatures (+${newOpen})`;
+                document.getElementById('support').innerHTML = `The support letter has ${json.support} signatures (+${newSupport}, ${json.supportPending} pending on GitHub)`;
+                document.getElementById('open').innerHTML = `The open letter has ${json.open} signatures by 16 initial signers, 48 organizations and ${json.open - 48 - 16} individuals (+${newOpen})`;
 
                 if (json.open > json.support) {
                     document.getElementById('ahead').innerHTML = `The open letter has ${json.open - json.support} more signatures than the support letter`;
