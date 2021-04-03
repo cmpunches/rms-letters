@@ -68,13 +68,13 @@
                     var newOpen = json.open - cdata.open;
                 }
 
-                document.getElementById('support').innerHTML = `The support letter has ${json.support} signatures (+${newSupport}, <span title="Signatures (PRs) that haven't been merged yet">${json.supportPending} pending on GitHub</span>)`;
-                document.getElementById('open').innerHTML = `The open letter has ${json.open} signatures (+${newOpen})`;
+                document.getElementById('support').innerHTML = `The letter in support of Dr. Stallman has ${json.support} signatures (+${newSupport}, <span title="Signatures (PRs) that haven't been merged yet">${json.supportPending} pending on GitHub</span>)`;
+                document.getElementById('open').innerHTML = `The defamation letter has ${json.open} signatures (+${newOpen})`;
 
                 if (json.open > json.support) {
-                    document.getElementById('ahead').innerHTML = `The open letter has ${json.open - json.support} more signatures than the support letter`;
+                    document.getElementById('ahead').innerHTML = `The defamation letter has ${json.open - json.support} more signatures than the support letter`;
                 } else if (json.support > json.open) {
-                    document.getElementById('ahead').innerHTML = `The support letter has ${json.support - json.open} more signatures than the open letter`;
+                    document.getElementById('ahead').innerHTML = `The support letter has ${json.support - json.open} more signatures than the defamation letter`;
                 }
             }
 
